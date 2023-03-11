@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	text-decoration: none;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -95,8 +96,12 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+li:hover, li:hover a {
 	color: #B1663C;
+}
+
+li a {
+	color: black;
 }
 #introduction {
 	display: flex;
@@ -125,6 +130,34 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.gallery-filter ul {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	column-gap: 10px;
+	margin-bottom: 40px;
+}
+
+.gallery-filter ul li button {
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;	
+	background-color: white;
+	color:#1D6154;
+	padding: 9px 15px;
+	cursor: pointer;
+}
+
+.gallery-filter ul li button.active {
+	color: white;
+	background-color:#1D6154;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -137,36 +170,50 @@ li:hover {
 	width: 100%;
 
 }
-#contact {
+#contact, #login {
 	width: 50%;
 margin: auto;
 }
-#contact > * {
+#contact > *, #login > *  {
 	text-align: center;
 
 }
-#contact h2{
+#contact h2, #login h2{
 	margin-bottom: 20px;
 }
-#contact form {
+#contact form, #login form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
 	flex-direction: column;
 }
 
-#contact input {
+#contact input, #login input {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label {
+#contact label, #login label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#login h2 {
+	margin-top:166px;
+}
+
+#login {
+	margin-bottom: 200px;
+}
+
+#login form a {
+	text-align: center;
+	text-decoration: underline;
+	color:black;
 }
 
 input[type="submit"]{
