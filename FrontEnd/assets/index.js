@@ -28,8 +28,45 @@ function filterCategory(categoryId) {
     }
 }
 
+function setupAdminView() {
+    if (window.localStorage.getItem('usertoken') !== null) {
+        /** add edit-mode className to the header */
+        const header = document.querySelector('header');
+        header.classList.add('edit-mode');
+        /** display the edit-actions top */
+        const editActions = document.querySelector('#edit-mode-action');
+        editActions.style.display = 'flex';
+        /** setup logout button */
+        const loginLink = document.querySelector('a#loginLink');
+        loginLink.href='#';
+        loginLink.innerText='logout';
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.localStorage.removeItem('usertoken');
+            window.location.reload();
+        })
+
+        /** hide galery filter */
+        const galleryFilter = document.querySelector('.gallery-filter ul');
+        galleryFilter.style.display = 'none';
+
+        const galleryTitle = document.querySelector('#portfolio h2');
+        galleryTitle.style.marginTop = '100px';
+        galleryTitle.style.marginBottom = '90px';
+        
+    } else {
+         /** Hide edit option */
+        const editButtons = Array.from(document.querySelectorAll('span.edit-button'));
+        editButtons.forEach(editButton => {
+            editButton.style.display = 'none';
+        })
+    }
+}
+
 /** Main App Function */
 async function initializeProject() {
+    setupAdminView();
+
     const gallery = document.querySelector('.gallery');
     const galleryFilter = document.querySelector('.gallery-filter ul');
 

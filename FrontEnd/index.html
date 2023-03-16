@@ -6,18 +6,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<script src="https://kit.fontawesome.com/4ead6441b6.js" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
+<div id="edit-mode-action">
+	<p>
+		<span class="edit-button"><i class="fa-regular fa-pen-to-square"></i> Mode édition</span>
+		<button>publier les changements</button>
+	</p>
+</div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="./login.html">login</a></li>
+			<li><a href="./login.html" id="loginLink">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -26,6 +33,7 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<span class="edit-button"><i class="fa-regular fa-pen-to-square"></i> modifier</span>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -35,7 +43,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<h2>Mes Projets <span class="edit-button"><i class="fa-regular fa-pen-to-square"></i> modifier</span> </h2>
 		<div class="gallery-filter">
 			<ul>
 

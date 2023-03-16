@@ -59,6 +59,10 @@ header {
 	justify-content: space-between;
 	margin: 50px 0
 }
+
+header.edit-mode {
+	margin-top:109px;
+}
 section {
 	margin: 50px 0
 }
@@ -100,6 +104,48 @@ li:hover, li:hover a {
 	color: #B1663C;
 }
 
+span.edit-button {
+	position: absolute;
+	line-height: 16px;
+	font-size:14px;
+	font-family: 'Work Sans', sans-serif;
+	color:#000;
+	font-weight: 400;
+	cursor:pointer;
+}
+
+#edit-mode-action {
+	height:59px;
+	background-color: black;
+	color:white;
+	width:100%;
+	position:absolute;
+	left:0px;
+	top:0px;
+	display:none;
+	align-items: center;
+	justify-content: center;
+}
+
+#edit-mode-action p span.edit-button {
+	position:relative;
+	color:white;
+	margin-right: 21px;
+}
+
+#edit-mode-action button {
+	background: #FFFFFF;
+	border-radius: 60px;
+	padding: 11px 23px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	border: none;
+	cursor:pointer;
+}
+
 li a {
 	color: black;
 }
@@ -109,6 +155,13 @@ li a {
 }
 #introduction figure {
 	flex: 1
+}
+
+#introduction figure span.edit-button {
+	position:relative;
+	width:80%;
+	display: block;
+	margin: 15px auto;
 }
 #introduction img {
 	display: block;
@@ -129,6 +182,12 @@ li a {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+	position:relative;
+}
+
+#portfolio span.edit-button {
+	bottom: 4px;
+	margin-left:31px;
 }
 
 .gallery-filter ul {
@@ -208,6 +267,10 @@ margin: auto;
 
 #login {
 	margin-bottom: 200px;
+}
+
+#login p.feed-back {
+	color: red;
 }
 
 #login form a {
