@@ -227,8 +227,111 @@ li a {
 
 .gallery img {
 	width: 100%;
-
 }
+
+/* Modal */
+
+.modal-backdrop {
+	width:100%;
+	height: 100vh;
+	position:fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.6);
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	z-index:200;
+}
+
+.modal {
+	width: 630px;
+	background-color:white;
+	border-radius: 10px;
+	
+}
+
+.modal .modal-title {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 26px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.modal .modal-actions {
+	padding: 32px 36px;
+	display:flex;
+	justify-content: space-between;
+}
+
+.modal .modal-content .gallery-photos {
+	margin-left: 104px;
+	margin-right: 104px;
+	margin-top: 46px;
+	display:flex;
+	box-sizing: border-box;
+	column-gap:6px;
+	row-gap: 4px;
+	flex-wrap: wrap;
+	border-bottom: 1px solid #B3B3B3;
+	padding-bottom: 47px;
+}
+.modal .modal-content .gallery-photos .gallery-photo {
+	width: calc((100% / 5) - 6px);
+	position:relative;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo .gallery-photo-actions {
+	position:absolute;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo .gallery-image {
+	width: 100%;
+	height: 104px;
+	background-color:grey;
+}
+
+.modal .modal-button-primary {
+	border:none;
+	font-size: 14px;
+	padding: 10px 49px;
+	display: block;
+	width: auto !important;
+	margin: 38px auto 23px auto;
+}
+
+.modal .modal-button-secondary {
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	/* identical to box height */
+
+	text-align: center;
+
+	color: #D65353;
+	margin: 0 auto;
+	border: none;
+	background-color:transparent;
+	display:block;
+	margin-bottom: 48px;
+}
+
+input[type="submit"], .modal-button-primary{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+}
+
+
 #contact, #login {
 	width: 50%;
 margin: auto;
@@ -279,16 +382,7 @@ margin: auto;
 	color:black;
 }
 
-input[type="submit"]{
-	font-family: 'Syne';
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	margin : 2em auto ;
-	width: 180px;
-	text-align: center;
-	border-radius: 60px ;
-}
+
 
 footer nav ul {
 	display: flex;
