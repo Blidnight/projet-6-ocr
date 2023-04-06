@@ -273,7 +273,7 @@ li a {
 	display:flex;
 	box-sizing: border-box;
 	column-gap:6px;
-	row-gap: 4px;
+	row-gap: 12px;
 	flex-wrap: wrap;
 	border-bottom: 1px solid #B3B3B3;
 	padding-bottom: 47px;
@@ -285,12 +285,47 @@ li a {
 
 .modal .modal-content .gallery-photos .gallery-photo .gallery-photo-actions {
 	position:absolute;
+	display: flex;
+	gap: 3px;
+	right: 5px;
+	top: 6px;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo .gallery-photo-actions > div {
+	width: 17px;
+	height: 17px;
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #000;
+	border-radius: 2px;
+	font-size: 9px;
+	color:white;
+	cursor: pointer;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo .gallery-photo-actions .move {
+	visibility: hidden;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo:hover .gallery-photo-actions .move {
+	visibility: visible;
 }
 
 .modal .modal-content .gallery-photos .gallery-photo .gallery-image {
 	width: 100%;
 	height: 104px;
 	background-color:grey;
+}
+
+
+.modal .modal-content .gallery-photos .gallery-photo .gallery-image img {
+	width:100%;
+}
+
+.modal .modal-content .gallery-photos .gallery-photo .edit{
+	cursor: pointer;
+	margin-top: 6px;
 }
 
 .modal .modal-button-primary {
