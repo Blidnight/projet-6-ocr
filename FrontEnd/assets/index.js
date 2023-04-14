@@ -4,10 +4,22 @@ let modalOpen = '';
 
 
 async function apiFetch(path, options = { headers : { accept: 'application/json' }}) {
-    const req = await fetch(`http://localhost:5678/api/${path}`, options);
-    const data = await req.json();
-
-    return data;
+    const req = await fetch(`http://localhost:5678/api/${path}`, { 
+        ...options,
+        headers: {
+            accept: 'application/json',
+            authorization: `Bearer ${window.localStorage.getItem('usertoken')}`,
+            ...(options.headers ?? {}),
+        }
+    });
+    
+    try {
+        const data = await req.json();
+        return data;
+    } catch (e) {
+        return { message : 'no response '};
+    }
+    
 }
 
 const MODAL_HTML_STRUCTURE = `
@@ -38,25 +50,21 @@ async function openModal(modalName) {
     }
 
     if (modalName === 'home') {
-        const actions = [
-            {
-                label : 'Ajouter une photo',
-                cssClass : 'modal-button-primary',
-                action: function () {
-
-                }
-            },
-            {
-                label: 'Supprimer la galerie',
-                cssClass : 'modal-button-secondary',
-                action: function () {
-                    
-                }
-            }
-        ];
         const modal = document.createElement('div');
         modal.classList.add('modal-backdrop');
         modal.innerHTML = MODAL_HTML_STRUCTURE;
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        }
+
+        const modalCloseButton = modal.querySelector('.modal-close-button');
+        modalCloseButton.onclick = () => {
+            modal.remove();
+        }
+        const modalBackButton = modal.querySelector('.modal-back-button');
+        modalBackButton.style.visibility = 'hidden';
 
         const modalTitle = modal.querySelector('h2.modal-title');
         modalTitle.textContent = 'Galerie photo';
@@ -65,6 +73,17 @@ async function openModal(modalName) {
 
         const worksData = await apiFetch('works');
         const modalContent = modal.querySelector('.modal-content');
+        const modalBodyActions = modal.querySelector('.modal-body-actions');
+
+        modalBodyActions.innerHTML = `
+            <button class="modal-button-primary" id="addPhotoBtn">Ajouter une photo</button>
+            <button class="modal-button-secondary">Supprimer la galerie</button>
+        `;
+
+        const addPhotoBtn = modalBodyActions.querySelector('#addPhotoBtn');
+        addPhotoBtn.onclick = () => {
+            openModal('add-photo');
+        }
         const galleryPhotos = document.createElement('div');
         galleryPhotos.classList.add('gallery-photos');
         modalContent.appendChild(galleryPhotos);
@@ -87,10 +106,160 @@ async function openModal(modalName) {
             const galleryImage = galleryPhoto.querySelector('.gallery-image img');
             galleryImage.src = work.imageUrl;
             galleryImage.alt = work.title;
+
+            galleryPhoto.onclick = async () => {
+                galleryPhoto.remove();
+                await apiFetch('works/' + work.id, {
+                    method: 'delete',
+                });
+                await initializeProject();
+            }
             galleryPhotos.appendChild(galleryPhoto);
+        }
+    } else if (modalName === 'add-photo') {
+        const modal = document.createElement('div');
+        modal.classList.add('modal-backdrop');
+        modal.innerHTML = MODAL_HTML_STRUCTURE;
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        }
+
+       
+
+        const modalCloseButton = modal.querySelector('.modal-close-button');
+        modalCloseButton.onclick = () => {
+            modal.remove();
+        }
+        const modalBackButton = modal.querySelector('.modal-back-button');
+        modalBackButton.onclick = () => {
+            openModal('home');
+        }
+
+        const modalTitle = modal.querySelector('h2.modal-title');
+        modalTitle.textContent = 'Ajout Photo';
+
+        document.body.appendChild(modal);
+
+        const backendCategoriesData = await apiFetch('categories');
+
+        const modalContent = modal.querySelector('.modal-content');
+        const modalBodyActions = modal.querySelector('.modal-body-actions');
+        modalBodyActions.innerHTML = `
+            <button id='submit-form-button' class="modal-button-primary disabled">Valider</button>
+        `;
+
+        const MODAL_FORM_STRUCTURE = `
+            <form id="upload-form">
+                <div class="file-upload">
+                    <div class="file-upload-form">
+                        <img src="./assets/icons/image-upload.svg" alt="image-upload">
+                        <input type="file" id="file-input" accept="image/png, image/gif, image/jpeg" />
+                        <button class="btn">+ Ajouter photo</button>
+                        <p>jpg, png: 4mo max</p>
+                    </div>
+                    <div class="file-upload-preview">
+                        <img src="./assets/icons/image-upload.svg" alt="image-upload">
+                    </div>
+                </div>
+                <label for="email">Titre</label>
+                <input type="text" name="titre" id="titre">
+                <label for="email">Catégorie</label>
+                <select id='categories-select'>
+
+                </select>
+            </form>
+        `;
+
+        modalContent.innerHTML = MODAL_FORM_STRUCTURE;
+        const uploadForm = modal.querySelector('#upload-form');
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+        })
+
+        const fileUploadForm = modalContent.querySelector('.file-upload-form');
+        const fileUploadPreview = modalContent.querySelector('.file-upload-preview');
+        
+        const fileInputField = modalContent.querySelector('.file-upload input');
+        const fileUploadButton = modalContent.querySelector('.file-upload button.btn');
+        const fileImageElement = modalContent.querySelector('.file-upload-preview img');
+
+        const categoriesSelect = modalContent.querySelector('#categories-select');
+        const imageNameInput = modalContent.querySelector('input#titre');
+        const formSubmitButton = modal.querySelector('button#submit-form-button');
+        formSubmitButton.disabled = true;
+
+        for(let i = 0; i < backendCategoriesData.length; i += 1) {
+            let categoryData = backendCategoriesData[i];
+            let option = document.createElement('option');
+            option.value = categoryData.id;
+            option.textContent = categoryData.name;
+            categoriesSelect.appendChild(option);
+        }
+        categoriesSelect.value = backendCategoriesData[0].id;
+
+
+        fileUploadButton.onclick = () => {
+            fileInputField.dispatchEvent(new MouseEvent('click'));
+        }
+
+        let imageFile;
+        let imageTitle = '';
+        let imageCategory = categoriesSelect.value;
+
+        const validateFormData = () => {
+            if (
+                (imageFile !== undefined && imageFile !== null) &&
+                (imageTitle !== '') &&
+                imageCategory !== undefined
+            ) {
+                formSubmitButton.classList.remove('disabled');
+                formSubmitButton.disabled = false;
+            } else {
+                formSubmitButton.classList.add('disabled');
+                formSubmitButton.disabled = true;
+            }
+        }
+
+        fileInputField.onchange = (e) => {
+            if (e.target.files.length > 0) {
+                imageFile = e.target.files[0];
+                fileImageElement.src = URL.createObjectURL(imageFile);
+                fileUploadForm.style.display = 'none';
+                fileUploadPreview.style.display = 'flex';
+            }
+            validateFormData();
+        }
+
+        categoriesSelect.onchange = (e) => {
+            imageCategory = e.target.value;
+            validateFormData();
+        }
+
+        imageNameInput.onkeydown = imageNameInput.onchange =  (e) => {
+            imageTitle = e.target.value;
+            validateFormData();
+        }
+
+        formSubmitButton.onclick = async () => {
+            formSubmitButton.disabled = true;
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('title', imageTitle);
+            formData.append('category', parseInt(imageCategory));
+            await apiFetch('works', {
+                method: 'post',
+                body: formData,
+            });
+            await initializeProject();
+            modal.remove();
+
         }
 
         
+
+        document.body.appendChild(modal);
     }
 }
 
@@ -133,6 +302,13 @@ function setupAdminView() {
             window.localStorage.removeItem('usertoken');
             window.location.reload();
         })
+
+        const editButtons = Array.from(document.querySelectorAll('span.edit-button'));
+        for (let i = 0; i < editButtons.length; i += 1) {
+            editButtons[i].onclick = () => {
+                openModal('home');
+            }
+        }
 
         /** hide galery filter */
         const galleryFilter = document.querySelector('.gallery-filter ul');

@@ -266,6 +266,11 @@ li a {
 	justify-content: space-between;
 }
 
+.modal .modal-actions > div {
+	cursor: pointer;
+	font-size: 17px;
+}
+
 .modal .modal-content .gallery-photos {
 	margin-left: 104px;
 	margin-right: 104px;
@@ -328,6 +333,93 @@ li a {
 	margin-top: 6px;
 }
 
+.modal .modal-content form {
+	width: 420px;
+	margin: 36px auto 0px auto;
+	display:flex;
+	flex-direction: column;
+	border-bottom: 1px solid #B3B3B3;
+	padding-bottom: 47px;
+}
+
+.modal-content form .file-upload {
+	width: 100%;
+	height: 170px;
+	background-color: #E8F1F6;
+	margin-bottom: 30px;
+	position:relative;
+}
+
+
+.modal-content form .file-upload .file-upload-preview {
+	display:none;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.modal-content form .file-upload .file-upload-preview img {
+	height: 100%;
+	width: auto;
+}
+
+
+
+.modal-content form .file-upload .file-upload-form {
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-top: 28px;
+}
+
+.modal-content form .file-upload button.btn {
+	background-color: #CBD6DC;
+	border-radius: 50px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: center;
+	border:none;
+	padding: 10px 33px;
+	margin-top: 21px;
+	margin-bottom: 7px;
+
+	color: #306685;
+}
+
+.modal-content form .file-upload img {
+	width: 58px;
+}
+
+.modal-content form #file-input {
+	display:none;
+}
+
+.modal-content form .file-upload p {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	/* identical to box height */
+
+	text-align: center;
+
+	color: #444444;
+}
+
+.modal-content form select {
+	padding-left: 21.5px;
+	padding-right: 21.5px;
+}
+
+.modal button {
+	cursor: pointer;
+}
+
 .modal .modal-button-primary {
 	border:none;
 	font-size: 14px;
@@ -366,6 +458,11 @@ input[type="submit"], .modal-button-primary{
 	border-radius: 60px ;
 }
 
+.modal-button-primary.disabled {
+	color: white;
+	background: #A7A7A7;
+}
+
 
 #contact, #login {
 	width: 50%;
@@ -385,13 +482,13 @@ margin: auto;
 	flex-direction: column;
 }
 
-#contact input, #login input {
+#contact input, #login input, .modal-content form input, .modal-content form select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
-#contact label, #login label {
+#contact label, #login label, .modal-content form label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
