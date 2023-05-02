@@ -103,15 +103,16 @@ async function openModal(modalName) {
             const galleryPhoto = document.createElement('div');
             galleryPhoto.classList.add('gallery-photo');
             galleryPhoto.innerHTML = GALLERY_PHOTO_STRUCTURE;
+            const deleteButton = galleryPhoto.querySelector('.gallery-photo-actions .delete');
             const galleryImage = galleryPhoto.querySelector('.gallery-image img');
             galleryImage.src = work.imageUrl;
             galleryImage.alt = work.title;
 
-            galleryPhoto.onclick = async () => {
-                galleryPhoto.remove();
+            deleteButton.onclick = async () => {
                 await apiFetch('works/' + work.id, {
                     method: 'delete',
                 });
+                galleryPhoto.remove();
                 await initializeProject();
             }
             galleryPhotos.appendChild(galleryPhoto);
