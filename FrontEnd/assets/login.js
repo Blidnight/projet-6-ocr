@@ -37,7 +37,6 @@ async function login(e) {
             window.location.href="./index.html";
         }
 
-        console.log(data);
     } catch (e) {
         feedback.innerText = 'Erreur dans l’identifiant ou le mot de passe.'
     }

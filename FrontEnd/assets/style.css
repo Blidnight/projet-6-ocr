@@ -170,7 +170,12 @@ li a {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	position:relative;
+}
+
+#introduction article .edit-button {
+	top: -30px;
 }
 #introduction h2 {
 	margin-bottom: 1em;
